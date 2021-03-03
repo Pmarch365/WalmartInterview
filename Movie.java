@@ -1,3 +1,5 @@
+//Peter Marchese
+
 import java.util.*;
 import java.io.*;
 
@@ -44,10 +46,11 @@ public class Movie {
                             seatsAvailable++;
                         }
                     }
+                    //If the row has less seats available than seats requested continue to next row
                     if(seatsRequested > seatsAvailable){
                         continue;
                     }
-                    //Check if seat is avaible
+                    //Check if seat is avaible and add them in order in a row
                     for(int c = 0; c < seats[r].length; c++){
                         if(seats[r][c].equals("U") && seatsRequested > 0){
                             seats[r][c] = "O";
@@ -57,6 +60,7 @@ public class Movie {
                             }
                             seatsRequested--;
                         }
+                        //Adds 3 seat buffer after all seats have been filled
                         if( seatsRequested <= 0 ){
                             if( c + 1 < 20){
                                 seats[r][c+1] = "O";
@@ -73,8 +77,12 @@ public class Movie {
                     //If all seats have been filled move to next request
                     if(seatsRequested <= 0){
                         break;
-                    }
+                    } 
                 }
+                if(seatsRequested > 0){
+                    writeFile.write("SEATS COULD NOT BE FILLED");
+                }
+                //Write newline to file unless it is last line
                 if(!(i == requests.size()-1)){
                     writeFile.write("\n");
                 }
@@ -83,6 +91,7 @@ public class Movie {
         } catch (IOException e) {
             System.out.println("Could not write to file.");
         }
+        //Prints all seats and their occupancy to the console
         for(int i = 0; i < seats.length; i++){
             for(int j = 0; j < seats[i].length; j++){
                 System.out.print(seats[i][j]);
