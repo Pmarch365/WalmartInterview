@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Movie {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         //Create ArrayList to store requests read from the file
         ArrayList<String> requests = new ArrayList<String>();
         //Create 2D array which stores the seating information
@@ -15,8 +15,8 @@ public class Movie {
         }
         //Open input file and store requests in ArrayList
         try{
-            File file = new File("test.txt");
-            Scanner scan = new Scanner(file);
+            File readFile = new File("test.txt");
+            Scanner scan = new Scanner(readFile);
             while(scan.hasNextLine()){
                 String line = scan.nextLine();
                 requests.add(line);
@@ -25,11 +25,70 @@ public class Movie {
         } catch (FileNotFoundException e){
             System.out.println("Error. No file was found.");
         }
-        //Split each request into its request number and 
-        //number of requested seats and stores it into temp as an array
-        String[] temp = new String[2];
-        for(int i = 0; 0 < requests.size(); i++){
-            temp = requests.get(i).split(" ");
+        //Write to output file
+        int seatsRequested;
+        try {
+            FileWriter writeFile = new FileWriter("Seating.txt");
+            //Parses through requests
+            for(int i = 0; i < requests.size(); i++){
+                //Writes request number to file
+                writeFile.write(requests.get(i).split(" ")[0] + " ");
+                //Variable to store number of seats per request
+                seatsRequested = Integer.parseInt(requests.get(i).split(" ")[1]);
+                //Traverses through all seats and determines which seats can be occupied
+                for(int r = 0; r < seats.length; r++){
+                    //This for loop checks if the seats available per row is >= seats requested
+                    int seatsAvailable = 0;
+                    for(int c = 0; c < seats[r].length; c++){
+                        if(seats[r][c].equals("U")){
+                            seatsAvailable++;
+                        }
+                    }
+                    if(seatsRequested > seatsAvailable){
+                        continue;
+                    }
+                    //Check if seat is avaible
+                    for(int c = 0; c < seats[r].length; c++){
+                        if(seats[r][c].equals("U") && seatsRequested > 0){
+                            seats[r][c] = "O";
+                            writeFile.write(String.valueOf((char)(r + 65)) + (c+1));
+                            if(!(seatsRequested == 1)){
+                                writeFile.write(",");
+                            }
+                            seatsRequested--;
+                        }
+                        if( seatsRequested <= 0 ){
+                            if( c + 1 < 20){
+                                seats[r][c+1] = "O";
+                            } 
+                            if( c + 2 < 20){
+                                seats[r][c+2] = "O";
+                            }
+                            if( c + 3 < 20){
+                                seats[r][c+3] = "O";
+                            }
+                            break;
+                        }
+                    }
+                    //If all seats have been filled move to next request
+                    if(seatsRequested <= 0){
+                        break;
+                    }
+                }
+                if(!(i == requests.size()-1)){
+                    writeFile.write("\n");
+                }
+            }
+            writeFile.close();
+        } catch (IOException e) {
+            System.out.println("Could not write to file.");
         }
+        for(int i = 0; i < seats.length; i++){
+            for(int j = 0; j < seats[i].length; j++){
+                System.out.print(seats[i][j]);
+            }
+            System.out.println();
+        }
+        return;
     }
 }
