@@ -19,7 +19,7 @@ public class Movie {
         }
         //Open input file and store requests in ArrayList
         try{
-            File readFile = new File("test.txt");
+            File readFile = new File(args[0]);
             Scanner scan = new Scanner(readFile);
             while(scan.hasNextLine()){
                 String line = scan.nextLine();
