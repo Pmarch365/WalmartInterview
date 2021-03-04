@@ -2,7 +2,7 @@
 
 ## Peter Marchese
 
-**Language: Java**
+**Language: Java**  
 **Version: 11.0.10**
 
 **Description:**
@@ -15,10 +15,10 @@ The program takes each request and attempts to provide the correct amount of sea
 
 **Seating Algorithm**
 
-The seating algorithm takes the number of seats requested and checks if each row can accommodate the requested amount of seats.
+The seating algorithm takes the number of seats requested and checks if each row can accommodate the requested amount of seats.  
     - This is done by checking if requested seats are less than or equal to the available seats per row.
 The algorithm then starts filling in each available seat until all requested seats are met.
-After finishing a request and placing the seats, the algorithm adds three buffer seats towards the right.
+After finishing a request and placing the seats, the algorithm adds three buffer seats towards the right.  
     - This ensures that there are always three seats between different parties of customers.
 If there are no rows that can accomodate the request, the customer is notified that there is no seating available for a group of that size.
 The algorithm utilizes an ArrayList of Strings as well as a 2D array of Strings.
@@ -35,5 +35,5 @@ It is assumed that the input file will use the correct syntax and format.
 To run this program, first compile the Movie.java file by typing "javac Movie.java" into the command line.
 To run this executable type into the command line: "java Movie [PATH_TO_INPUT]"
 Replace [PATH_TO_INPUT] with the path to the input file that will be used.
-Once run, the program will write a file named "Seating.txt" as well as return the path to this file.
+Once run, the program will write a file named "Seating.txt" as well as return the path to this file.  
     - NOTE: This version of the program will rewrite the Seating.txt file if used consecutively. This issue will be resolved at a later date.
